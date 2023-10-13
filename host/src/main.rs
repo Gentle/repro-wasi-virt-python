@@ -56,12 +56,10 @@ async fn instantiate_component(
         .inherit_stderr();
     if preopen {
         builder.preopened_dir(
-            wasmtime_wasi::Dir::from_std_file(
-                File::open("./guest/target/wasm32-wasi/wasi-deps/usr/").unwrap(),
-            ),
+            wasmtime_wasi::Dir::from_std_file(File::open("./wasi-root/").unwrap()),
             DirPerms::all(),
             FilePerms::all(),
-            "/usr",
+            "/",
         );
     }
     let wasi = builder.build(&mut table).unwrap();
