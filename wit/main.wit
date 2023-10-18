@@ -1,5 +1,6 @@
 package repro:python-wasi
 
 world repro {
-        export version: func() -> string
+        export init: func() -> string
+        export ulid: func() -> string
 }

@@ -79,8 +79,10 @@ async fn main() {
     let adapted = std::fs::read("adapted.wasm").unwrap();
     let (component, _, mut store) =
         instantiate_component(&engine, Component::new(&engine, adapted).unwrap(), true).await;
-    let x = component.call_version(&mut store).await.unwrap();
-    println!("Response: {x}");
+    let x = component.call_init(&mut store).await.unwrap();
+    println!("Init Response: {x}");
+    let x = component.call_ulid(&mut store).await.unwrap();
+    println!("Ulid response: {x}");
     println!("Initializing virtualized component without preopened dir");
     let virtualized = std::fs::read("virtualized.wasm").unwrap();
     let (component, _, mut store) = instantiate_component(
@@ -89,5 +91,8 @@ async fn main() {
         false,
     )
     .await;
-    let x = component.call_version(&mut store).await.unwrap();
+    let x = component.call_init(&mut store).await.unwrap();
+    println!("Init Response: {x}");
+    let x = component.call_ulid(&mut store).await.unwrap();
+    println!("Ulid response: {x}");
 }

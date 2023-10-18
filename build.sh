@@ -12,6 +12,7 @@ wasm-tools component new --adapt wasi_snapshot_preview1=wasi_snapshot_preview1.r
 	-o adapted.wasm
 mkdir -p wasi-root
 cp -rv guest/target/wasm32-wasi/wasi-deps/usr wasi-root/
+pip install python-ulid --prefix wasi-root/usr/local
 wasi-virt adapted.wasm \
 	--allow-clocks \
   --allow-env \
@@ -22,4 +23,4 @@ wasi-virt adapted.wasm \
   -e PYTHONPATH=/usr/local/lib/python3.11:/usr/local/lib/python3.11/site-packages \
 	--mount /=wasi-root/ \
 	-o virtualized.wasm
-cargo run -p host
+cargo run -p host --release
